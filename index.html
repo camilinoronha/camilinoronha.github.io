@@ -5,129 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário Interativo</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f9f9f9;
-            padding: 20px;
-        }
-        form {
-            max-width: 400px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #ff5c8d;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 4px;
-        }
-        button:hover {
-            background-color: #e04a77;
-        }
-        .hearts {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            top: 0;
-            left: 0;
-        }
-        .heart {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: red;
-            transform: rotate(-45deg);
-            animation: float 3s ease-in-out infinite;
-        }
-        .heart:before,
-        .heart:after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: red;
-            border-radius: 50%;
-        }
-        .heart:before {
-            top: -10px;
-            left: 0;
-        }
-        .heart:after {
-            left: 10px;
-            top: 0;
-        }
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(-45deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-800px) rotate(-45deg);
-                opacity: 0;
-            }
-        }
+        body { text-align: center; font-family: Arial; background: #f9f9f9; }
+        form { margin: 20px auto; max-width: 300px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        input, button { width: 100%; margin: 10px 0; padding: 10px; font-size: 16px; border-radius: 4px; }
+        button { background: #ff5c8d; color: white; border: none; cursor: pointer; }
+        .hearts { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .heart { position: absolute; width: 20px; height: 20px; background: red; transform: rotate(-45deg); animation: float 3s infinite ease-in-out; }
+        .heart:before, .heart:after { content: ''; position: absolute; width: 20px; height: 20px; background: red; border-radius: 50%; }
+        .heart:before { top: -10px; left: 0; } .heart:after { left: 10px; top: 0; }
+        @keyframes float { 0% { transform: translateY(0) rotate(-45deg); opacity: 1; } 100% { transform: translateY(-800px) rotate(-45deg); opacity: 0; } }
     </style>
 </head>
 <body>
-    <h1>Formulário Interativo com Corações</h1>
-    <form id="form">
-        <input type="text" id="name" placeholder="Seu nome" required>
-        <input type="text" id="animal" placeholder="Animal preferido" required>
-        <input type="text" id="series" placeholder="Série preferida" required>
-        <button type="submit">Enviar</button>
-    </form>
-    <p id="message"></p>
-    <div class="hearts" id="hearts"></div>
-
+    <form id="form"><input id="name" placeholder="Seu nome" required><input id="animal" placeholder="Animal" required><input id="series" placeholder="Série" required><button>Enviar</button></form>
+    <p id="message"></p><div class="hearts" id="hearts"></div>
     <script>
-        const form = document.getElementById('form');
-        const message = document.getElementById('message');
-        const heartsContainer = document.getElementById('hearts');
-
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const animal = document.getElementById('animal').value;
-            const series = document.getElementById('series').value;
-
-            message.textContent = `Olá, ${name}! Seu animal preferido é ${animal}, e você adora a série "${series}".`;
-            message.style.color = '#333';
-            message.style.fontWeight = 'bold';
-
-            generateHearts();
-        });
-
-        function generateHearts() {
-            for (let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.style.left = `${Math.random() * 100}vw`;
-                heart.style.animationDuration = `${2 + Math.random() * 3}s`;
-                heartsContainer.appendChild(heart);
-
-                setTimeout(() => {
-                    heart.remove();
-                }, 5000); // Remove o coração após a animação
-            }
-        }
+        form.onsubmit = e => { e.preventDefault(); const [n, a, s] = ['name', 'animal', 'series'].map(id => document.getElementById(id).value); 
+            message.textContent = `Olá, ${n}! Você gosta de ${a} e da série "${s}".`; for (let i = 0; i < 20; i++) {
+            const h = document.createElement('div'); h.className = 'heart'; h.style.left = Math.random() * 100 + 'vw'; h.style.animationDuration = 2 + Math.random() * 3 + 's';
+            hearts.appendChild(h); setTimeout(() => h.remove(), 5000); } };
     </script>
 </body>
 </html>
