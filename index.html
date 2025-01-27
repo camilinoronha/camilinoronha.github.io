@@ -3,27 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário Interativo</title>
+    <title>Formulário</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
-        body { text-align: center; font-family: Arial; background: #f9f9f9; }
-        form { margin: 20px auto; max-width: 300px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        input, button { width: 100%; margin: 10px 0; padding: 10px; font-size: 16px; border-radius: 4px; }
-        button { background: #ff5c8d; color: white; border: none; cursor: pointer; }
-        .hearts { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-        .heart { position: absolute; width: 20px; height: 20px; background: red; transform: rotate(-45deg); animation: float 3s infinite ease-in-out; }
-        .heart:before, .heart:after { content: ''; position: absolute; width: 20px; height: 20px; background: red; border-radius: 50%; }
-        .heart:before { top: -10px; left: 0; } .heart:after { left: 10px; top: 0; }
-        @keyframes float { 0% { transform: translateY(0) rotate(-45deg); opacity: 1; } 100% { transform: translateY(-800px) rotate(-45deg); opacity: 0; } }
+        body { font-family: 'Comfortaa', sans-serif; text-align: center; margin: 0; height: 100vh; display: flex; 
+               justify-content: center; align-items: center; background: linear-gradient(to right, #ff7eb3, #74ebd5); }
+        form { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        input { margin: 10px 0; padding: 10px; width: 100%; border: 1px solid #ccc; border-radius: 5px; }
+        input[type="submit"] { background: #4CAF50; color: white; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
-    <form id="form"><input id="name" placeholder="Seu nome" required><input id="animal" placeholder="Animal" required><input id="series" placeholder="Série" required><button>Enviar</button></form>
-    <p id="message"></p><div class="hearts" id="hearts"></div>
-    <script>
-        form.onsubmit = e => { e.preventDefault(); const [n, a, s] = ['name', 'animal', 'series'].map(id => document.getElementById(id).value); 
-            message.textContent = `Olá, ${n}! Você gosta de ${a} e da série "${s}".`; for (let i = 0; i < 20; i++) {
-            const h = document.createElement('div'); h.className = 'heart'; h.style.left = Math.random() * 100 + 'vw'; h.style.animationDuration = 2 + Math.random() * 3 + 's';
-            hearts.appendChild(h); setTimeout(() => h.remove(), 5000); } };
-    </script>
+    <form action="/action_page.php">
+        <label for="nome">Nome:</label><br><input type="text" id="nome" name="nome" placeholder="Seu nome"><br>
+        <label for="idade">Idade:</label><br><input type="number" id="idade" name="idade" placeholder="Sua idade"><br>
+        <label for="cor">Cor Preferida:</label><br><input type="text" id="cor" name="cor" placeholder="Sua cor preferida"><br><br>
+        <input type="submit" value="Enviar">
+    </form>
 </body>
 </html>
