@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Contato</title>
+    <title>Formulário Interativo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            text-align: center;
             background-color: #f9f9f9;
             padding: 20px;
-            text-align: center;
         }
         form {
             max-width: 400px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
             background: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
-        input, textarea {
+        input {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -28,7 +28,7 @@
             font-size: 16px;
         }
         button {
-            background-color: #4CAF50;
+            background-color: #ff5c8d;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -37,23 +37,97 @@
             border-radius: 4px;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #e04a77;
+        }
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            transform: rotate(-45deg);
+            animation: float 3s ease-in-out infinite;
+        }
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+        .heart:after {
+            left: 10px;
+            top: 0;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(-45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-800px) rotate(-45deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Entre em Contato</h1>
-    <form action="/enviar_formulario.php" method="post">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
-
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="mensagem">Mensagem:</label>
-        <textarea id="mensagem" name="mensagem" rows="4" required></textarea>
-
+    <h1>Formulário Interativo com Corações</h1>
+    <form id="form">
+        <input type="text" id="name" placeholder="Seu nome" required>
+        <input type="text" id="animal" placeholder="Animal preferido" required>
+        <input type="text" id="series" placeholder="Série preferida" required>
         <button type="submit">Enviar</button>
     </form>
+    <p id="message"></p>
+    <div class="hearts" id="hearts"></div>
+
+    <script>
+        const form = document.getElementById('form');
+        const message = document.getElementById('message');
+        const heartsContainer = document.getElementById('hearts');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const animal = document.getElementById('animal').value;
+            const series = document.getElementById('series').value;
+
+            message.textContent = `Olá, ${name}! Seu animal preferido é ${animal}, e você adora a série "${series}".`;
+            message.style.color = '#333';
+            message.style.fontWeight = 'bold';
+
+            generateHearts();
+        });
+
+        function generateHearts() {
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDuration = `${2 + Math.random() * 3}s`;
+                heartsContainer.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000); // Remove o coração após a animação
+            }
+        }
+    </script>
 </body>
 </html>
